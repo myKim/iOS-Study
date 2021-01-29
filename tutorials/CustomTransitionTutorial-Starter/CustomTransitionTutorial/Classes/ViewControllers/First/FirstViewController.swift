@@ -32,6 +32,10 @@ class FirstViewController: UIViewController {
     func presentSecondViewController(with data: CellData) {
         let secondViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SecondViewController") as! SecondViewController
 
+        // Block1 - 4
+        // SecondViewController의 transitioningDelegate를 세팅해준다.
+        // nil이면 기본 transition이 사용된다.
+        secondViewController.transitioningDelegate = self
         secondViewController.modalPresentationStyle = .fullScreen
         secondViewController.data = data
         present(secondViewController, animated: true)
