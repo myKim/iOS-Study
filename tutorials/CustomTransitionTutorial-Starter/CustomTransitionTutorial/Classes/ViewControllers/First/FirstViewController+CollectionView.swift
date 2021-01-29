@@ -22,7 +22,12 @@ extension FirstViewController: UICollectionViewDelegate, UICollectionViewDataSou
 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        // Block2 - 6
+        // 셀을 탭하면 선택된 셀을 저장한다.
+        selectedCell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell
+        // Block2 - 7
+        // 선택된 셀의 스냅샷을 저장한다.
+        selectedCellImageViewSnapshot = selectedCell?.snapshotView(afterScreenUpdates: false)
 
         presentSecondViewController(with: DataManager.data[indexPath.row])
     }

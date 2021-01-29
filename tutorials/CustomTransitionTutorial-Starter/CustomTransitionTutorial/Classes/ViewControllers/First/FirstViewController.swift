@@ -10,8 +10,15 @@ import UIKit
 
 class FirstViewController: UIViewController {
 
-
-
+    // Block2 - 5
+    // 선택된 셀을 저장할 변수와 그 셀의 snapshot할 변수를 선언한다.
+    var selectedCell: CollectionViewCell?
+    var selectedCellImageViewSnapshot: UIView?
+    
+    // Block2 - 15
+    // Animator 변수 선언
+    var animator: Animator?
+    
     @IBOutlet private var collectionView: UICollectionView!
 
 
