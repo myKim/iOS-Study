@@ -71,9 +71,85 @@ final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(toView)
         
         // Block2 - 20
-        // completeTransition 메서드를 호출해 transitionContext에 트랜지션이 끝났음을 알린다.
-        // 호출하지 않으면 트랜지션 중인 것으로 인식되어 인터렉션이 불가능하다.
-        transitionContext.completeTransition(true)
+        // deleted line: transitionContext.completeTransition(true)
+        
+        // Block3 - 21
+        //  - selectedCell : 선택된 셀
+        //  - window : presenting이면 FirstViewController의 윈도우, dismissing이면 SecondViewController의 윈도우
+        //  - cellImageSnapShot : 선택된 셀 이미지뷰의 스냅샷
+        //  - controllerImageSnapshot : SecondViewController 이미지뷰의 스냅샷
+        guard let selectedCell = firstViewController.selectedCell,
+              let window = firstViewController.view.window ?? secondViewController.view.window,
+              let cellImageSnapshot = selectedCell.locationImageView.snapshotView(afterScreenUpdates: true),
+              let controllerImageSnapshot = secondViewController.locationImageView.snapshotView(afterScreenUpdates: true) else {
+            transitionContext.completeTransition(true)
+            return
+        }
+        
+        let isPresenting = type.isPresenting
+        
+        // Block3 - 22
+        // imageViewSnapshot은 트랜지션 애니메이션에 사용될 뷰이다.
+        // presenting이면 셀의 이미지뷰가 사용되고
+        // dismissing이면 SecondViewController의 이미지뷰가 사용된다.
+        let imageViewSnapshot: UIView
+        if isPresenting {
+            imageViewSnapshot = cellImageSnapshot
+        } else {
+            imageViewSnapshot = controllerImageSnapshot
+        }
+        
+        // Block3 - 23
+        // 보여지는(presented) 뷰는 투명해야 한다.
+        // 만약 그렇지 않으면 이것은 애니메이션 뷰를 덮어버린다.
+        toView.alpha = 0
+        
+        // Block3 - 24
+        // 애니메이션을 실행할 첫번째 뷰인 imageViewSnapshot을 containerView에 추가한다.
+        // Array.forEach를 사용하는 이유는 나중에 여러개의 뷰들을 이 배열에 넣기 때문이다.
+        [imageViewSnapshot].forEach {
+            containerView.addSubview($0)
+        }
+        
+        // Block3 - 25
+        // SecondViewController의 이미지뷰의 frame을 얻는다.
+        // 이 위치정보를 셀의 frame부터의 트랜지션을 만드는데 사용한다.
+        let controllerImageViewRect = secondViewController.locationImageView.convert(secondViewController.locationImageView.bounds, to: window)
+        
+        // Block3 - 26
+        // 애니메이션이 수행될 스냅샷에 최초 위치정보(frame)을 할당한다.
+        // 만약 이 작업을 하지 않으면 좌상단 모서리에 추가된다.
+        // imageViewSnapshot은 완전히 새로운 뷰라는 것을 이해하는 것이 중요하다.
+        // 셀의 이미지뷰나 SecondViewController의 이미지뷰와 다른 애니메이션을 위한 새로운 뷰이다.
+        [imageViewSnapshot].forEach {
+            $0.frame = isPresenting ? cellImageViewRect : controllerImageViewRect
+        }
+        
+        // Block3 - 27
+        // 애니메이션을 구현한다.
+        // UIView.animate로 구현하지 않고 UIView.animateKeyframes로 구현하는 이유는 이후에 다른 시점, 다른 기간의 애니메이션들을 더 추가하기 위해서이다.
+        //
+        UIView.animateKeyframes(withDuration: Self.duration, delay: 0, options: .calculationModeCubic, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
+                // Block3 - 28
+                // presenting일 경우 셀에서의 imageViewSnapshot의 위치(frame)를 SecondViewController의 이미지뷰의 위치(frame)로 이동시켜주면 되고
+                // dismissing일 경우 반대이면 된다.
+                imageViewSnapshot.frame = isPresenting ? controllerImageViewRect : self.cellImageViewRect
+            }
+        }, completion: { _ in
+            // Block3 - 29
+            // 트랜지션이 끝나면 트랜지션을 위해 사용한 뷰들을 제거해주어야 한다.
+            // 여기서는 imageViewSnapshot만 제거하면 된다.
+            imageViewSnapshot.removeFromSuperview()
+            
+            // Block3 - 30
+            // 애니메이션 시작 전 투명으로 설정해주었던 toView를 불투명하게 변경해준다.
+            toView.alpha = 1
+            
+            // Block3 - 31
+            // 트랜지션을 complete한다.
+            transitionContext.completeTransition(true)
+        })
     }
 }
 
