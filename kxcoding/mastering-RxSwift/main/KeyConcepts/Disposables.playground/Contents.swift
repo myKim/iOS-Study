@@ -27,11 +27,68 @@ import RxSwift
  # Disposables
  */
 
+Observable.from([1,2,3])
+    .subscribe { (elem) in
+        print("Next", elem)
+    } onError: { (error) in
+        print("Error", error)
+    } onCompleted: {
+        print("Completed")
+    } onDisposed: {
+        print("Disposed")
+    }
+
+print("------------------------------------------")
+
+Observable.from([1,2,3])
+    .subscribe {
+        print($0)
+    }
+
+// dispose 하는 첫번째 방법
+
+let subscription1 = Observable.from([1,2,3])
+    .subscribe { (elem) in
+        print("Next", elem)
+    } onError: { (error) in
+        print("Error", error)
+    } onCompleted: {
+        print("Completed")
+    } onDisposed: {
+        print("Disposed")
+    }
+
+subscription1.dispose()
+
+// disposeBag을 사용하는 방법
+
+var disposeBag = DisposeBag()
+
+Observable.from([1,2,3])
+    .subscribe {
+        print($0)
+    }
+    .disposed(by: disposeBag)
+
+disposeBag = DisposeBag()
+
+print("-------------------------------")
+
+let subscription2 = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+    .subscribe { (elem) in
+        print("Next", elem)
+    } onError: { (error) in
+        print("Error", error)
+    } onCompleted: {
+        print("Completed")
+    } onDisposed: {
+        print("Disposed")
+    }
 
 
-
-
-
+DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+    subscription2.dispose()
+}
 
 
 

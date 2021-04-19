@@ -27,16 +27,52 @@ import RxSwift
  # Observables
  */
 
+// #1
+// 하나의 observer를 받아서 Disposable로 리턴한다.
+Observable<Int>.create { (observer) -> Disposable in
+    observer.on(.next(0)) // 구독자에게 0 데이터가 저장된 next 이벤트가전달된다.
+    observer.onNext(1)
+    
+    observer.onCompleted() // 이후 다른 이벤트가 전달되지 않음
+    
+    return Disposables.create()
+}
+
+
+// #2
+Observable.from([0, 1])
 
 
 
+/*
+ Observables and Observers #2
+*/
+
+let o1 = Observable<Int>.create { (observer) -> Disposable in
+    observer.on(.next(0)) // 구독자에게 0 데이터가 저장된 next 이벤트가전달된다.
+    observer.onNext(1)
+    
+    observer.onCompleted() // 이후 다른 이벤트가 전달되지 않음
+    
+    return Disposables.create()
+}
+// #1
+o1.subscribe {
+    print($0)
+    
+    if let elem = $0.element {
+        print(elem)
+    }
+}
 
 
+print("-----------------------------")
 
 
-
-
-
-
-
+// #2
+o1.subscribe (onNext: { elem in
+    print("-----start-----")
+    print(elem)
+    print("-----end-----")
+})
 

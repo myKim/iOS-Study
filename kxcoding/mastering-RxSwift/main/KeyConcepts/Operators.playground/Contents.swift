@@ -30,8 +30,10 @@ import RxSwift
 let bag = DisposeBag()
 
 Observable.from([1, 2, 3, 4, 5, 6, 7, 8, 9])
-   .subscribe { print($0) }
-   .disposed(by: bag)
+    .take(5) // 5개의 요소만 방출
+    .filter { $0.isMultiple(of: 2) } // 짝수만 방출
+    .subscribe { print($0) }
+    .disposed(by: bag)
 
 
 
