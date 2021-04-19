@@ -35,3 +35,24 @@ enum MyError: Error {
 }
 
 
+let r = ReplaySubject<Int>.create(bufferSize: 3)
+
+(1...10).forEach { r.onNext($0) }
+
+r.subscribe { print("Observer 1 >>", $0) }
+    .disposed(by: disposeBag)
+
+r.subscribe { print("Observer 2 >>", $0) }
+    .disposed(by: disposeBag)
+
+// 버퍼에서 가장 마지막 이벤트가 삭제된다.
+r.onNext(11)
+
+// 때문에 9, 10, 11 이벤트가 전달된다.
+r.subscribe { print("Observer 3 >>", $0) }
+    .disposed(by: disposeBag)
+
+r.onCompleted()
+
+r.subscribe { print("Observer 4 >>", $0) }
+    .disposed(by: disposeBag)

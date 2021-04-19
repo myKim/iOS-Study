@@ -35,3 +35,30 @@ enum MyError: Error {
    case error
 }
 
+// 비어 있는 값으로 생성
+let p = PublishSubject<Int>()
+
+p.subscribe { print("PublishSubject >>", $0) }
+    .disposed(by: disposeBag)
+
+// 초기값을 넣은 상태로 생성
+let b = BehaviorSubject<Int>(value: 0)
+
+b.onNext(1)
+
+b.subscribe { print("BehaviorSubject >>", $0) }
+    .disposed(by: disposeBag)
+
+b.onNext(2)
+
+// 가장 최신의 next이벤트를 저장하고 있으며 다음 구독자에게 전달한다.
+b.subscribe { print("BehaviorSubject2 >>", $0) }
+    .disposed(by: disposeBag)
+
+// completed, error 이벤트의 경우에는 바로 이벤트가 전달되며, 이후 구독한 옵저버에도
+// 같은 이벤트가 전달된다.
+b.onCompleted()
+//b.onError(MyError.error)
+
+b.subscribe { print("BehaviorSubject3 >>", $0) }
+    .disposed(by: disposeBag)
