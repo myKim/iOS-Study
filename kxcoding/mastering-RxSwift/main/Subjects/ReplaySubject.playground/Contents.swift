@@ -52,7 +52,8 @@ r.onNext(11)
 r.subscribe { print("Observer 3 >>", $0) }
     .disposed(by: disposeBag)
 
-r.onCompleted()
+//r.onCompleted()
+r.onError(MyError.error)
 
 r.subscribe { print("Observer 4 >>", $0) }
     .disposed(by: disposeBag)

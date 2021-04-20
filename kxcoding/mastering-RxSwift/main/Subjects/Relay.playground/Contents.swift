@@ -22,7 +22,7 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
+import RxCocoa // Subject와 다르게 import
 
 /*:
  # Relay
@@ -30,4 +30,21 @@ import RxCocoa
 
 let bag = DisposeBag()
 
+let publishRelay = PublishRelay<Int>()
+publishRelay.subscribe { print("1: \($0)") }
+    .disposed(by: bag)
 
+// relay는 onNext 메서드를 제공하지 않는다. 대신 accept 메서드를 사용한다.
+publishRelay.accept(1)
+publishRelay.accept(2)
+
+
+
+let behaviorRelay = BehaviorRelay<Int>(value: 1)
+behaviorRelay.accept(2)
+
+behaviorRelay.subscribe { print("2: \($0)") }
+    .disposed(by: bag)
+
+behaviorRelay.accept(3)
+print(behaviorRelay.value) // readonly 속성, 값을 바꾸고 싶다면 accept를 통해 새로운 값을 전달해야 한다.

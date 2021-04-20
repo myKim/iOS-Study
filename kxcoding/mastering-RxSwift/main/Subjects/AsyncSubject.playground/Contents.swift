@@ -34,3 +34,12 @@ enum MyError: Error {
    case error
 }
 
+let a = AsyncSubject<Int>()
+
+a.subscribe { print("AsyncSubject >>", $0) }
+    .disposed(by: bag)
+
+a.onNext(1)
+a.onNext(2)
+a.onNext(3)
+a.onCompleted()
