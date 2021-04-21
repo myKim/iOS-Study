@@ -29,3 +29,16 @@ import RxSwift
 
 let disposeBag = DisposeBag()
 
+// skipUntil
+let subject = PublishSubject<Int>()
+let trigger = PublishSubject<Int>()
+
+subject.skipUntil(trigger)
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+subject.onNext(1)
+
+trigger.onNext(0) // completed, error의 경우에는 subject에서 skip이 끝나지 않음
+
+subject.onNext(2)

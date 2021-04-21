@@ -30,5 +30,16 @@ import RxSwift
 let disposeBag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
+let subject = PublishSubject<Int>()
 
+subject.takeLast(2) // 2는 버퍼 역할을 한다.
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
+numbers.forEach { subject.onNext($0) }
+
+subject.onNext(11) // 버퍼에 계속 저장되고 있으며 새로운 것들이 방출되면 버퍼가 갱신된다.
+
+subject.onCompleted() // onComplete 메서드를 호출하면 버퍼에 저장된 요소들이 방출된다.
+
+// subject.onError(MyError.error) // onError 메서드를 호출하면 버퍼의 요소들을 방출하지 않고 error 이벤트만 방출한다.

@@ -50,8 +50,9 @@ let buttonTap = Observable<String>.create { observer in
 }
 
 
-buttonTap   
-   .subscribe { print($0) }
-   .disposed(by: disposeBag)
+buttonTap
+    .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
 //: [Next](@next)
