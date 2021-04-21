@@ -33,6 +33,24 @@ enum MyError: Error {
    case error
 }
 
+Observable<String>.create { (observer) -> Disposable in
+    guard let url = URL(string: "https://google.com") else {
+        observer.onError(MyError.error) // 구독한 옵저버에게 error 이벤트를 전달한다.
+        return Disposables.create() // Disposable's' 클래스의 create 메서드를 호출해야한다.
+    }
+    
+    guard let html = try? String(contentsOf: url, encoding: .utf8) else {
+        observer.onError(MyError.error)
+        return Disposables.create()
+    }
+    
+    observer.onNext(html)
+    observer.onCompleted()
+    
+    return Disposables.create()
+}.subscribe { print($0) }
+
+
 
 
 

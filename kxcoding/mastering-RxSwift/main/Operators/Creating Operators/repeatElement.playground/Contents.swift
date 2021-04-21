@@ -30,10 +30,8 @@ import RxSwift
 let disposeBag = DisposeBag()
 let element = "❤️"
 
-
-
-
-
-
-
+Observable.repeatElement(element)
+    .take(7) // 제한을 걸어주지 않으면 무한루프에 빠진다.
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
