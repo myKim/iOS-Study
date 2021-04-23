@@ -30,4 +30,35 @@ import RxSwift
 let disposeBag = DisposeBag()
 let words = ["Apple", "Banana", "Orange", "Book", "City", "Axe"]
 
+Observable.from(words)
+    .groupBy { $0.count }
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
+Observable.from(words)
+    .groupBy { $0.count }
+    .subscribe(onNext: { (groupedObservable) in
+        print("== \(groupedObservable.key)")
+        groupedObservable.subscribe { print("   \($0)") }
+    })
+    .disposed(by: disposeBag)
+
+Observable.from(words)
+    .groupBy { $0.count }
+    .flatMap { $0.toArray() }
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+// 앞글자 기준으로 나누기
+Observable.from(words)
+    .groupBy { $0.first ?? Character(" ") }
+    .flatMap { $0.toArray() }
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+// 홀수 짝수 나누기
+Observable<Int>.range(start: 1, count: 10)
+    .groupBy { $0.isMultiple(of: 2) }
+    .flatMap { $0.toArray() }
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)

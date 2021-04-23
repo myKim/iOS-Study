@@ -29,3 +29,14 @@ import RxSwift
 
 let disposeBag = DisposeBag()
 
+Observable.range(start: 1, count: 10)
+    .scan(0, accumulator: +)
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+Observable.range(start: 1, count: 5)
+    .scan(0, accumulator: { (a, b) -> Int in
+        return a + (2*b)
+    })
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)

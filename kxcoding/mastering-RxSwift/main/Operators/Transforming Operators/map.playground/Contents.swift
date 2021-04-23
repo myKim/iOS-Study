@@ -30,5 +30,12 @@ import RxSwift
 let disposeBag = DisposeBag()
 let skills = ["Swift", "SwiftUI", "RxSwift"]
 
+Observable.from(skills)
+    .map { "Hello, \($0)" }
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
-
+Observable.from(skills)
+    .map { $0.count }  // 문자열을 정수로 변환하여 리턴하는 것도 가능
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)

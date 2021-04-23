@@ -35,7 +35,18 @@ let b = BehaviorSubject(value: 2)
 let subject = PublishSubject<BehaviorSubject<Int>>()
 
 subject
-   .flatMap { $0.asObservable() }
+   .flatMapLatest { $0.asObservable() }
    .subscribe { print($0) }
    .disposed(by: disposeBag)
 
+subject.onNext(a)
+
+a.onNext(11)
+
+subject.onNext(b)
+
+a.onNext(111) // 더이상 구독자로 전달되지 않음
+b.onNext(22)
+
+subject.onNext(a) // 다시 최신으로 변경되어 전달 됨
+b.onNext(222) // 다시 최신이 아니므로 무시된다.
