@@ -16,8 +16,85 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Cy-Wm-cn0" userLabel="Header View">
+                                <rect key="frame" x="0.0" y="44" width="414" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e35-4p-86P" userLabel="Next Button">
+                                        <rect key="frame" x="354" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="nIy-7h-NCc"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Next"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="03V-11-uCW"/>
+                                    <constraint firstAttribute="bottom" secondItem="e35-4p-86P" secondAttribute="bottom" id="5st-nk-60R"/>
+                                    <constraint firstItem="e35-4p-86P" firstAttribute="top" secondItem="6Cy-Wm-cn0" secondAttribute="top" id="HgQ-ep-QKs"/>
+                                    <constraint firstAttribute="trailing" secondItem="e35-4p-86P" secondAttribute="trailing" id="zwx-Sm-yV6"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeE-n2-maB" userLabel="Content View">
+                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't know your workspace URL?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKt-xi-7JT">
+                                        <rect key="frame" x="20" y="727" width="374" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="workspace-url.slack.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAB-H2-xKO">
+                                        <rect key="frame" x="20" y="369" width="374" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Ca-rw-9fM">
+                                        <rect key="frame" x="20" y="359" width="374" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="P7P-VP-vjZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="go"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Slack workspace URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8jl-Uk-hSE">
+                                        <rect key="frame" x="20" y="344" width="160" height="15"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="0Ca-rw-9fM" secondAttribute="trailing" constant="20" id="0mF-Ff-kiw"/>
+                                    <constraint firstItem="LAB-H2-xKO" firstAttribute="trailing" secondItem="0Ca-rw-9fM" secondAttribute="trailing" id="H17-WN-bdu"/>
+                                    <constraint firstAttribute="trailing" secondItem="EKt-xi-7JT" secondAttribute="trailing" constant="20" id="Q9g-xI-5ax"/>
+                                    <constraint firstItem="0Ca-rw-9fM" firstAttribute="centerY" secondItem="zeE-n2-maB" secondAttribute="centerY" id="RDI-pt-Mqa"/>
+                                    <constraint firstItem="LAB-H2-xKO" firstAttribute="leading" secondItem="0Ca-rw-9fM" secondAttribute="leading" id="iUf-N5-JvA"/>
+                                    <constraint firstItem="LAB-H2-xKO" firstAttribute="height" secondItem="0Ca-rw-9fM" secondAttribute="height" multiplier="0.5" id="jnh-Ep-ROk"/>
+                                    <constraint firstItem="0Ca-rw-9fM" firstAttribute="leading" secondItem="zeE-n2-maB" secondAttribute="leading" constant="20" id="mZ7-O5-SQh"/>
+                                    <constraint firstItem="8jl-Uk-hSE" firstAttribute="leading" secondItem="0Ca-rw-9fM" secondAttribute="leading" id="oOh-2E-H7F"/>
+                                    <constraint firstItem="LAB-H2-xKO" firstAttribute="centerY" secondItem="0Ca-rw-9fM" secondAttribute="centerY" id="qd7-IZ-TeB"/>
+                                    <constraint firstItem="EKt-xi-7JT" firstAttribute="leading" secondItem="zeE-n2-maB" secondAttribute="leading" constant="20" id="qrL-xO-gla"/>
+                                    <constraint firstAttribute="bottom" secondItem="EKt-xi-7JT" secondAttribute="bottom" constant="10" id="tiK-4d-ioW"/>
+                                    <constraint firstItem="0Ca-rw-9fM" firstAttribute="top" secondItem="8jl-Uk-hSE" secondAttribute="bottom" id="yAM-6r-aeK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Cy-Wm-cn0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="23o-3d-GGS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zeE-n2-maB" secondAttribute="trailing" id="EMi-j5-cHh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zeE-n2-maB" secondAttribute="bottom" id="INx-3M-fMt"/>
+                            <constraint firstItem="zeE-n2-maB" firstAttribute="top" secondItem="6Cy-Wm-cn0" secondAttribute="bottom" id="Xk0-0h-21D"/>
+                            <constraint firstItem="zeE-n2-maB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cas-EN-uHt"/>
+                            <constraint firstItem="6Cy-Wm-cn0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rTE-hS-L2n"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Cy-Wm-cn0" secondAttribute="trailing" id="xu8-wB-cY9"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="H4w-NP-WjA"/>
                 </viewController>
