@@ -8,6 +8,10 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (strong, nonatomic) IBOutlet UITextField *urlField;
+@property (strong, nonatomic) IBOutlet UILabel *placeholderLabel;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *placeholderLeadingConstraint;
+@property (strong, nonatomic) IBOutlet UIButton *nextButton;
 
 @end
 
