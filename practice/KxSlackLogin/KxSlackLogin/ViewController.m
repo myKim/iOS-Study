@@ -55,6 +55,22 @@
 //            return NO;
 //        }
     }
+    
+    NSMutableString *finalText = [NSMutableString stringWithString:textField.text];
+    [finalText replaceCharactersInRange:range withString:string];
+    
+    UIFont *font = textField.font ?: [UIFont systemFontOfSize:16];
+    NSDictionary *dict = @{NSFontAttributeName:font};
+    CGFloat width = [finalText sizeWithAttributes:dict].width;
+    
+    self.placeholderLeadingConstraint.constant = width;
+    
+    if (finalText.length == 0) {
+        self.placeholderLabel.text = @"workspace-url.slack.com";
+    } else {
+        self.placeholderLabel.text = @".slack.com";
+    }
+    
     return YES;
 }
 
